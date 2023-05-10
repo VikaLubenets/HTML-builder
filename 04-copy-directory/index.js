@@ -31,18 +31,17 @@ function copyDir(source, target) {
   });
 }
 
-fs.stat(pathFolderTarget, (err, stats) => {
+fs.rm(pathFolderTarget, { recursive: true, force: true }, (err) => {
   if (err) {
+    console.log(`Error deleting folder: ${err}`);
+  } else {
     fs.mkdir(pathFolderTarget, { recursive: true }, (err) => {
       if (err) {
-        console.log(`Error creating directory: ${err}`);
+        console.log(`Error creating folder: ${err}`);
       } else {
         console.log('Folder created successfully!');
         copyDir(pathFolderCurr, pathFolderTarget);
       }
     });
-  } else {
-    console.log('Directory already exists');
-    copyDir(pathFolderCurr, pathFolderTarget);
   }
 });
